@@ -50,17 +50,37 @@ function incomeRatios() {
 }
 
 //Returns all valid checkins and outs within a ~11km square of the supplied lat and long
-function areaTraffic($lat, $long){
+function arrivalTraffic($lat, $long){
     $latRangeLess = $lat-0.1; //10km "radius"
     $latRangeMore = $lat+0.1;
     $longRangeLess = $long-0.1;
     $longRangeMore = $long+0.1;
 
-    $queryString = "SELECT * FROM `clocks` WHERE latitude <" . $latRangeMore . "AND latitude > " . $latRangeLess . "longitude < " . $longRangeMore . "longitude > " . $longRangeLess;
+    $queryString = "SELECT in_time FROM `clocks` WHERE latitude <" . $latRangeMore . " AND latitude > " . $latRangeLess . " AND longitude < " . $longRangeMore . " AND longitude > " . $longRangeLess;
 
-    $validListings = mysql_query($queryString);
+    $validListings = mysql_query($queryString) or die("Death");
 
-   return $validListings; 
+    while($row = mysql_fetch_array($validListings)) {
+    echo $row['in_time'];
+    }
+
+    return $validListings; 
+}
+
+function leavingTraffic($lat, $long){
+    $latRangeLess = $lat-0.1; //10km "radius"
+    $latRangeMore = $lat+0.1;
+    $longRangeLess = $long-0.1;
+    $longRangeMore = $long+0.1;
+
+    $queryString = "SELECT out_time FROM `clocks` WHERE latitude <" . $latRangeMore . " AND latitude > " . $latRangeLess . " AND longitude < " . $longRangeMore . " AND longitude > " . $longRangeLess;
+
+    $validListings = mysql_query($queryString) or die("Death");
+
+    while($row = mysql_fetch_array($validListings)) {
+    echo $row['in_time'];
+    }
+    return $validListings; 
 }
 
 function timeTraffic($validTraffic) {
@@ -80,24 +100,20 @@ function timeTraffic($validTraffic) {
     $leaving = 0;
 
 
-    foreach in $validTraffic {
-        if((strtotime($validTraffic['in_time']) <  $lateStart) && (strtotime($validTraffic['in_time']) > $earlyStart)) {
+    foreach($validTraffic as $value) {
+        if((strtotime($value['in_time']) <  $lateStart) && (strtotime($value['in_time']) > $earlyStart)) {
             //arriving
             $arriving++;
-       } else if((strtotime($validTraffic['out_time']) > $earlyLunch) || strtotime($validTraffic['in_time']) < $lateLunch) {
+       } else if((strtotime($value['out_time']) > $earlyLunch) || strtotime($value['in_time']) < $lateLunch) {
             $lunch++; 
-    }else if((strtotime$validTraffic['out_time'] > $finish)) {
+    }else if((strtotime($value['out_time']) > $finish)) {
             //leaving
             $leaving++;
         }
-
     }
-
-
-
+    $returnval = array("arriving" => $arriving, "lunch" => $lunch, "leaving" => $leaving);
+    return $returnVal;
 }
-
-
 
 ?>
 	</body>
