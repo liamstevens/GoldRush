@@ -49,11 +49,56 @@ function incomeRatios() {
     $ratios = array("low" => $lowCount, "medium" => $middleCount, "high" => $high);
 }
 
-$result = mysql_query("SELECT * FROM test");
+//Returns all valid checkins and outs within a ~11km square of the supplied lat and long
+function areaTraffic($lat, $long){
+    $latRangeLess = $lat-0.1; //10km "radius"
+    $latRangeMore = $lat+0.1;
+    $longRangeLess = $long-0.1;
+    $longRangeMore = $long+0.1;
 
-while ($row = mysql_fetch_array($result)) {
-	echo "<p><b>ID</b>: " . $row{'id'} . " <b>Thing</b>: " . $row{'thing'} . "</p>";
+    $queryString = "SELECT * FROM `clocks` WHERE latitude <" . $latRangeMore . "AND latitude > " . $latRangeLess . "longitude < " . $longRangeMore . "longitude > " . $longRangeLess;
+
+    $validListings = mysql_query($queryString);
+
+   return $validListings; 
 }
+
+function timeTraffic($validTraffic) {
+    date_default_timeset_set('UTC');
+    $earlyStart = strtotime("06:00:00",0);
+    $lateStart = strtotime("09:00:00",0);
+
+    $earlyLunch = strtotime("10:00:00",0);
+    $lateLunch = strtotime("14:00:00", 0);
+    
+    $finish = strtotime("16:00:00", 0);
+
+    $arriving = 0;
+
+    $lunch = 0;
+
+    $leaving = 0;
+
+
+    foreach in $validTraffic {
+        if((strtotime($validTraffic['in_time']) <  $lateStart) && (strtotime($validTraffic['in_time']) > $earlyStart)) {
+            //arriving
+            $arriving++;
+       } else if((strtotime($validTraffic['out_time']) > $earlyLunch) || strtotime($validTraffic['in_time']) < $lateLunch) {
+            $lunch++; 
+    }else if((strtotime$validTraffic['out_time'] > $finish)) {
+            //leaving
+            $leaving++;
+        }
+
+    }
+
+
+
+}
+
+
+
 ?>
 	</body>
 </html>
