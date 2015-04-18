@@ -1,0 +1,130 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    color: darkslategrey;
+}
+
+.navbar {
+    background-color: transparent;
+    border-color: transparent;
+    margin-bottom: 0px;
+}
+
+
+.navbar-toggle {
+  color: black;
+}
+
+.navbar a {
+  color: black;
+}
+
+.navbar li.active a {
+    color: gold;
+}
+
+.navbar ul.nav a:hover { 
+    background-color: transparent;
+    color: gold;
+}
+
+.navbar .navbar-toggle .icon-bar {
+    background-color: black;
+}
+
+.jumbotron {
+  color: white;
+    background-color: gold;
+    background-image: src('bg2.jpg');
+    height: 500px;
+    display: table;
+    width: 100%;
+}
+
+.jumbotron .container {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.carousel {
+    margin-top: 0px;
+}
+
+.carousel-caption {
+  text-shadow: none;
+}
+
+#services {
+  margin-bottom: 50px;
+}
+
+form {
+  max-width: 500px;
+  margin: auto;
+  padding-left: 0px;
+}
+
+#signup {
+  max-width: none;
+  padding-left: 0px;
+  padding-top: 25px;
+}
+
+#sign up {
+  
+}
+
+#sign_up {
+  background-color: lightgrey;
+  padding-bottom: 50px;
+  padding-top: 40px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+
+
+.jumbotron h1 {
+  text-shadow: 2px 2px 0px darkslategrey;
+}
+
+.jumbotron p {
+  text-shadow: 1px 1px 0px darkslategrey;
+  font-weight: 400;
+}
+
+h1 {
+  
+}
+
+.footer {
+  color: white;
+  padding: 20px;
+  padding-top: 40px;
+  background-color: darkslategrey;
+  margin-top: 50px;
+}
+
+btn-default {
+  border: 2px solid slategrey;
+  background-color: none;
+}
+
+#social_links li {
+  display: inline;
+  margin-right: 20px;
+  margin-left: 0px;
+}
+
+ul {
+  
+}
+
+.col-sm-6 {
+  
+}
+
+#copyright {
+  text-align: right;
+}
+
+`
